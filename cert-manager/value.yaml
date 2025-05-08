@@ -1,0 +1,23 @@
+installCRDs: true                   # Installs Custom Resource Definitions with the chart
+
+resources:                          # Resource limits and requests for the main cert-manager component
+  requests:                         # Minimum resources requested
+    cpu: 100m                       # Requests 0.1 CPU cores
+    memory: 128Mi                   # Requests 128 MB of memory
+  limits:                           # Maximum resources allowed
+    cpu: 500m                       # Limits to 0.5 CPU cores
+    memory: 512Mi                   # Limits to 512 MB of memory
+
+prometheus:                         # Prometheus integration configuration
+  enabled: true                     # Enables Prometheus metrics
+  servicemonitor:                   # ServiceMonitor configuration (for Prometheus Operator)
+    enabled: true                   # Creates a ServiceMonitor resource for auto-discovery
+
+webhook:                            # Configuration for the cert-manager webhook component
+  resources:                        # Resource limits and requests specifically for the webhook
+    requests:                       # Minimum resources requested
+      cpu: 50m                      # Requests 0.05 CPU cores
+      memory: 64Mi                  # Requests 64 MB of memory
+    limits:                         # Maximum resources allowed
+      cpu: 200m                     # Limits to 0.2 CPU cores
+      memory: 256Mi                 # Limits to 256 MB of memory

@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1     # Specifies the API version for Argo CD resources
+kind: AppProject                     # Defines this as an Argo CD Project resource
+metadata:
+  name: infrastructure               # Names this project "infrastructure"
+  namespace: argocd                  # Placed in the "argocd" namespace
+spec:                                # Begins the specification section
+  description: Infrastructure components for the platform  # Human-readable description
+  sourceRepos:                       # Defines which Git repositories can be used
+  - '*'                              # Allows ANY repository (wildcard) - more restrictive in production
+  destinations:                      # Defines where applications in this project can deploy to
+  - namespace: '*'                   # Allows deployment to ANY namespace (wildcard)
+    server: https://kubernetes.default.svc  # But only on the current cluster
+  clusterResourceWhitelist:          # Controls which cluster-scoped resources can be created
+  - group: '*'                       # Allows ANY API group
+    kind: '*'                        # Allows ANY resource kind
+  namespaceResourceWhitelist:        # Controls which namespace-scoped resources can be created
+  - group: '*'                       # Allows ANY API group
+    kind: '*'                        # Allows ANY resource kind

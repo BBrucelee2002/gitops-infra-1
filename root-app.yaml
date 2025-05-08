@@ -1,0 +1,22 @@
+apiVersion: arogproj.io/v1alpha1
+kind: Application
+metadata:
+  name: infrastructure
+  namespace: argocd 
+spec: 
+  projject: infrastructure
+  source:
+    repoURL: https://github
+    path: .
+    directory:
+      recurse: true
+      jsonnet: {}
+      excluse: "*.md"
+  
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
