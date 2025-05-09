@@ -1,22 +1,23 @@
-apiVersion: arogproj.io/v1alpha1
-kind: Application
+apiVersion: argoproj.io/v1alpha1     # Specifies the API version for Argo CD resources
+kind: Application                    # Defines this as an Argo CD Application resource
 metadata:
-  name: infrastructure
-  namespace: argocd 
-spec: 
-  projject: infrastructure
-  source:
-    repoURL: https://github
-    path: .
-    directory:
-      recurse: true
-      jsonnet: {}
-      excluse: "*.md"
-  
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: argocd
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+  name: infrastructure               # Names this application "infrastructure" - this is your root app
+  namespace: argocd                  # Places this resource in the "argocd" namespace
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io   # Ensures proper cleanup when deleting this application
+spec:                                # Begins the specification section
+  project: infrastructure           # Specifies which Argo CD project this application belongs to
+  source:                           # Defines where to get the application manifests
+    repoURL: https://github.com/BBrucelee2002/gitops-infra-1.git   # Git repo URL containing your manifests
+    path: .                         # Uses the root directory of the repository
+    directory:                      # Configuration for directory-based apps
+      recurse: true                 # KEY SETTING: Recursively searches all subdirectories for manifests
+      jsonnet: {}                   # Empty jsonnet config (not using jsonnet features)
+      exclude: "*.md"               # Excludes markdown files from processing
+  destination:                      # Defines where to deploy the discovered resources
+    server: https://kubernetes.default.svc   # Deploys to the same cluster Argo CD runs in
+    namespace: argocd               # Primarily deploys resources to the argocd namespace
+  syncPolicy:                       # Defines how synchronization should work
+    automated:                      # Enables automated sync
+      prune: true                   # Removes resources that no longer exist in Git
+      selfHeal: true                # Corrects drift by reapplying the desired state

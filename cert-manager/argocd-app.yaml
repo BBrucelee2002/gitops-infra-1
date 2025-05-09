@@ -10,7 +10,7 @@ spec:                               # Begins the specification section
   source:                           # Defines where to get the application manifests
     repoURL: https://charts.jetstack.io  # URL to the Helm repository for cert-manager
     chart: cert-manager             # Name of the Helm chart to use
-    targetRevision: v1.12.0         # Specific version of the chart to use
+    targetRevision: v1.17.2         # Specific version of the chart to use
     helm:                           # Helm-specific configuration
       valueFiles:                   # List of value files to use
         - ../values.yaml            # Relative path to values file in your repo
