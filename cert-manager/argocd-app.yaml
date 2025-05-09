@@ -13,7 +13,7 @@ spec:                               # Begins the specification section
     targetRevision: v1.17.2         # Specific version of the chart to use
     helm:                           # Helm-specific configuration
       valueFiles:                   # List of value files to use
-        - ../values.yaml            # Relative path to values file in your repo
+        - values.yaml            # Relative path to values file in your repo
   destination:                      # Defines where to deploy the application
     server: https://kubernetes.default.svc  # Deploys to the same cluster Argo CD runs in
     namespace: cert-manager         # Deploys cert-manager to its own namespace
